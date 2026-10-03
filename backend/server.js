@@ -8,8 +8,14 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Serve frontend directly from http://localhost:5000
+// Serve the complete Rader AI full website directly on http://localhost:5000
+const rootDir = path.join(__dirname, "..");
+app.use(express.static(rootDir));
 app.use(express.static(path.join(__dirname, "../frontend")));
+
+app.get("/", (req, res) => {
+    res.sendFile(path.join(rootDir, "index.html"));
+});
 
 /*
 =============================================================================
