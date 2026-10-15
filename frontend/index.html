@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rader AI — Neural Intelligence</title>
+<title>Rad AI — Intelligent Workspace</title>
 <style>
 /* ── Reset ── */
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -18,7 +18,7 @@
   --text-2:         #94a3b8;
   --text-dim:       #64748b;
   --border:         rgba(255, 255, 255, 0.1);
-  --border-highlight: rgba(99, 102, 241, 0.4);
+  --border-highlight: rgba(99, 102, 241, 0.45);
   --glass-bg:       rgba(15, 23, 42, 0.65);
   --glass-card:     rgba(15, 23, 42, 0.55);
   --glass-card-hover: rgba(30, 41, 59, 0.75);
@@ -106,7 +106,7 @@ body.light .cyber-grid {
 
 /* ── Top bar ── */
 .topbar {
-  height: 56px;
+  height: 58px;
   border-bottom: 1px solid var(--border);
   display: flex;
   align-items: center;
@@ -125,38 +125,61 @@ body.light .cyber-grid {
   align-items: center;
   gap: 14px;
 }
+
+/* ── Unique Rad AI Logo ── */
 .logo {
-  font-size: 16px;
-  font-weight: 700;
-  color: var(--text);
   display: flex;
   align-items: center;
   gap: 10px;
-  letter-spacing: -0.3px;
+  text-decoration: none;
+  cursor: pointer;
+  user-select: none;
 }
-.logo-dot {
-  width: 30px;
-  height: 30px;
-  border-radius: 9px;
-  background: linear-gradient(135deg, #4f46e5, #06b6d4);
+.logo-emblem {
+  width: 34px;
+  height: 34px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #fff;
-  font-size: 14px;
-  font-weight: 800;
-  box-shadow: 0 0 15px rgba(99, 102, 241, 0.5);
   position: relative;
+  filter: drop-shadow(0 0 10px rgba(99, 102, 241, 0.5));
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
-.logo-dot::after {
-  content: "";
-  position: absolute;
-  inset: -2px;
-  border-radius: 11px;
-  background: linear-gradient(135deg, rgba(99, 102, 241, 0.8), rgba(6, 182, 212, 0.8));
-  z-index: -1;
-  opacity: 0.6;
-  filter: blur(4px);
+.logo:hover .logo-emblem {
+  transform: scale(1.1) rotate(6deg);
+  filter: drop-shadow(0 0 16px rgba(56, 189, 248, 0.7));
+}
+.logo-emblem svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+.logo-text {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: -0.4px;
+  color: var(--text);
+}
+.logo-ai-gradient {
+  background: linear-gradient(135deg, #38bdf8 0%, #818cf8 50%, #ec4899 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 900;
+}
+.logo-badge {
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  padding: 2px 6px;
+  border-radius: 6px;
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(56, 189, 248, 0.2));
+  border: 1px solid rgba(99, 102, 241, 0.35);
+  color: #38bdf8;
+  margin-left: 2px;
 }
 
 /* Neural status pill */
@@ -252,47 +275,58 @@ body.light .cyber-grid {
 }
 .welcome-beacon-wrap {
   position: relative;
-  margin-bottom: 20px;
-}
-.welcome-icon {
-  width: 64px;
-  height: 64px;
-  border-radius: 20px;
-  background: linear-gradient(135deg, #4f46e5 0%, #06b6d4 100%);
+  margin-bottom: 24px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #fff;
-  font-size: 28px;
-  font-weight: 800;
-  box-shadow: 0 0 35px rgba(99, 102, 241, 0.45);
+}
+.welcome-logo-emblem {
+  width: 76px;
+  height: 76px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   position: relative;
   z-index: 2;
+  filter: drop-shadow(0 0 28px rgba(99, 102, 241, 0.65));
+  animation: gentle-float 4s ease-in-out infinite;
+}
+@keyframes gentle-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
 }
 .beacon-ring {
   position: absolute;
-  inset: -12px;
-  border-radius: 30px;
-  border: 1px dashed rgba(99, 102, 241, 0.4);
-  animation: spin-slow 24s linear infinite;
+  inset: -14px;
+  border-radius: 50%;
+  border: 1.5px dashed rgba(56, 189, 248, 0.45);
+  animation: spin-slow 22s linear infinite;
+}
+.beacon-ring-outer {
+  position: absolute;
+  inset: -26px;
+  border-radius: 50%;
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  animation: spin-reverse 32s linear infinite;
 }
 @keyframes spin-slow {
   to { transform: rotate(360deg); }
 }
+@keyframes spin-reverse {
+  to { transform: rotate(-360deg); }
+}
 
 .welcome h1 {
-  font-size: 30px;
-  font-weight: 700;
-  margin-bottom: 8px;
-  background: linear-gradient(135deg, var(--text) 30%, var(--brand) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  letter-spacing: -0.5px;
+  font-size: 34px;
+  font-weight: 800;
+  margin-bottom: 10px;
+  letter-spacing: -0.6px;
+  color: var(--text);
 }
 .welcome p {
   color: var(--text-2);
   font-size: 15px;
-  max-width: 480px;
+  max-width: 500px;
   line-height: 1.6;
 }
 
@@ -601,17 +635,41 @@ body.light .cyber-grid {
 <!-- Top bar -->
 <header class="topbar">
   <div class="topbar-left">
-    <div class="logo">
-      <div class="logo-dot">R</div>
-      Rader AI
+    <div class="logo" onclick="newChat()" title="Rad AI — New Conversation">
+      <div class="logo-emblem">
+        <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="radLogoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#38bdf8"/>
+              <stop offset="50%" stop-color="#6366f1"/>
+              <stop offset="100%" stop-color="#ec4899"/>
+            </linearGradient>
+            <linearGradient id="radRadarArc" x1="0%" y1="100%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#38bdf8"/>
+              <stop offset="100%" stop-color="#818cf8"/>
+            </linearGradient>
+          </defs>
+          <rect x="2" y="2" width="32" height="32" rx="9" fill="url(#radLogoGrad)" fill-opacity="0.18" stroke="url(#radLogoGrad)" stroke-width="1.6"/>
+          <path d="M9 25 A 11 11 0 0 1 25 9" stroke="url(#radRadarArc)" stroke-width="2" stroke-linecap="round" fill="none" opacity="0.6"/>
+          <path d="M12 25 A 7.5 7.5 0 0 1 25 12" stroke="url(#radRadarArc)" stroke-width="2.2" stroke-linecap="round" fill="none" opacity="0.9"/>
+          <circle cx="18" cy="18" r="4.2" fill="url(#radLogoGrad)"/>
+          <circle cx="18" cy="18" r="1.8" fill="#ffffff"/>
+          <line x1="18" y1="18" x2="27" y2="9" stroke="#38bdf8" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="logo-text">
+        <span>Rad</span>
+        <span class="logo-ai-gradient">AI</span>
+        <span class="logo-badge">PRO</span>
+      </div>
     </div>
     <div class="ai-status-pill" title="Neural Matrix Online">
       <div class="ai-status-dot"></div>
-      <span>Neural Engine Active</span>
+      <span>Engine Active</span>
     </div>
     <select class="model-select" id="modelSelect">
-      <option value="rader-neural">Rader AI (Neural v3)</option>
-      <option value="rader-reasoning">Rader AI (Reasoning)</option>
+      <option value="rad-core">Rad AI (Quantum Core)</option>
+      <option value="rad-reasoning">Rad AI (Deep Reasoning)</option>
     </select>
   </div>
   <div class="topbar-right">
@@ -630,11 +688,32 @@ body.light .cyber-grid {
 
     <section class="welcome" id="welcome">
       <div class="welcome-beacon-wrap">
-        <div class="welcome-icon">R</div>
+        <div class="beacon-ring-outer"></div>
         <div class="beacon-ring"></div>
+        <div class="welcome-logo-emblem">
+          <svg viewBox="0 0 76 76" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
+            <defs>
+              <linearGradient id="heroGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#38bdf8"/>
+                <stop offset="45%" stop-color="#6366f1"/>
+                <stop offset="100%" stop-color="#ec4899"/>
+              </linearGradient>
+              <linearGradient id="heroArcs" x1="0%" y1="100%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#38bdf8"/>
+                <stop offset="100%" stop-color="#c084fc"/>
+              </linearGradient>
+            </defs>
+            <rect x="4" y="4" width="68" height="68" rx="22" fill="url(#heroGrad)" fill-opacity="0.22" stroke="url(#heroGrad)" stroke-width="2.5"/>
+            <path d="M18 54 A 24 24 0 0 1 54 18" stroke="url(#heroArcs)" stroke-width="3" stroke-linecap="round" fill="none" opacity="0.6"/>
+            <path d="M25 54 A 16 16 0 0 1 54 25" stroke="url(#heroArcs)" stroke-width="3.5" stroke-linecap="round" fill="none" opacity="0.9"/>
+            <circle cx="38" cy="38" r="9" fill="url(#heroGrad)"/>
+            <circle cx="38" cy="38" r="4" fill="#ffffff"/>
+            <line x1="38" y1="38" x2="57" y2="19" stroke="#38bdf8" stroke-width="3.5" stroke-linecap="round"/>
+          </svg>
+        </div>
       </div>
-      <h1>Autonomous Neural Intelligence</h1>
-      <p>Ask anything — every topic includes both foundational concept and runnable practical code.</p>
+      <h1>Rad <span class="logo-ai-gradient">AI</span></h1>
+      <p>Your intelligent workspace for deep concepts, complex problem solving, and production-ready code.</p>
       <div class="suggestions">
         <div class="suggestion" onclick="ask('Explain artificial intelligence in simple terms')">
           <strong>🧠 Learn Artificial Intelligence</strong>
@@ -661,13 +740,13 @@ body.light .cyber-grid {
 <!-- Input Area -->
 <div class="input-area">
   <div class="input-wrapper">
-    <textarea id="input" rows="1" placeholder="Ask Rader AI anything (concepts + practical code)…"
+    <textarea id="input" rows="1" placeholder="Message Rad AI (concepts + practical code)…"
       onkeydown="handleKey(event)" oninput="autoGrow(this)"></textarea>
     <button class="send-btn" id="sendBtn" onclick="send()" title="Send">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
     </button>
   </div>
-  <div class="disclaimer">Rader AI Engine Active · Complete Conceptual & Practical Intelligence</div>
+  <div class="disclaimer">Rad AI Core Engine Active · Complete Conceptual & Practical Intelligence</div>
 </div>
 
 <script>
@@ -1048,9 +1127,9 @@ function addMsg(role, content) {
   div.className = `msg ${isUser ? 'user-bubble' : 'ai-bubble'}`;
 
   div.innerHTML = `
-    <div class="msg-avatar ${isUser ? 'user' : 'ai'}">${isUser ? 'U' : 'R'}</div>
+    <div class="msg-avatar ${isUser ? 'user' : 'ai'}">${isUser ? 'U' : 'Rad'}</div>
     <div class="msg-body">
-      <div class="msg-role">${isUser ? 'You' : 'Rader AI · Neural Core'}</div>
+      <div class="msg-role">${isUser ? 'You' : 'Rad AI'}</div>
       <div class="msg-content">${isUser ? escHtml(content) : renderMd(content)}</div>
     </div>`;
   chatInner.appendChild(div);
@@ -1068,9 +1147,9 @@ function showTyping() {
   div.className = "msg ai-bubble";
   div.id = "typing";
   div.innerHTML = `
-    <div class="msg-avatar ai">R</div>
+    <div class="msg-avatar ai">Rad</div>
     <div class="msg-body">
-      <div class="msg-role">Rader AI · Computing Synaptic Pathways...</div>
+      <div class="msg-role">Rad AI is thinking...</div>
       <div class="typing-dots"><span></span><span></span><span></span></div>
     </div>`;
   chatInner.appendChild(div);
@@ -1134,7 +1213,7 @@ function localReply(prompt) {
   const raw = (prompt || "").trim();
   const q = raw.toLowerCase();
 
-  if (!raw) return "Hello! I am Rader AI. Ask me about any topic in programming, AI, machine learning, system design, or interviews — I will provide both the core concept and practical implementation.";
+  if (!raw) return "Hello! I am Rad AI. Ask me about any topic in programming, AI, machine learning, system design, or interviews — I will provide both the core concept and practical implementation.";
 
   if (q.includes("python") || q.includes("calculator")) {
     return `## Python Programming: Concepts & Practical Mastery

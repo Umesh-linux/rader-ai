@@ -32,7 +32,7 @@ function generateRaderResponse(prompt, history = []) {
     const q = raw.toLowerCase();
 
     if (!raw) {
-        return "Hello! I am Rader AI. Ask me about any topic in programming, AI, machine learning, system design, or interviews — I will provide both the core concept and practical implementation.";
+        return "Hello! I am Rad AI. Ask me about any topic in programming, AI, machine learning, system design, or interviews — I will provide both the core concept and practical implementation.";
     }
 
     // -------------------------------------------------------------------------
@@ -1206,7 +1206,7 @@ app.post("/api/chat", (req, res) => {
         res.json({ answer });
 
     } catch (error) {
-        console.error("Rader AI Engine Error:", error);
+        console.error("Rad AI Engine Error:", error);
         res.status(500).json({
             error: "Unable to generate response."
         });
@@ -1220,7 +1220,7 @@ HEALTH CHECK
 */
 app.get("/api/health", (req, res) => {
     res.json({
-        status: "Rader AI is running with 100% zero-API-key local intelligence",
+        status: "Rad AI is running with 100% zero-API-key local intelligence",
         mode: "Zero-API-Key Enabled",
         timestamp: new Date().toISOString()
     });
@@ -1234,5 +1234,5 @@ SERVER LISTENER
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
-    console.log(`Rader AI Zero-API-Key Server running on http://localhost:${PORT}`);
+    console.log(`Rad AI Zero-API-Key Server running on http://localhost:${PORT}`);
 });
