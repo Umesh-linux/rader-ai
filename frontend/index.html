@@ -3,65 +3,127 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rader AI</title>
+<title>Rader AI — Neural Intelligence</title>
 <style>
 /* ── Reset ── */
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
 /* ── Theme tokens ── */
 :root {
-  --bg:        #ffffff;
-  --bg-alt:    #f9fafb;
-  --text:      #111827;
-  --text-2:    #6b7280;
-  --border:    #e5e7eb;
-  --input-bg:  #ffffff;
-  --hover:     #f3f4f6;
-  --accent:    #111827;
-  --code-bg:   #1e1e1e;
-  --user-bg:   #f3f4f6;
-  --brand:     #6366f1;
+  --bg-base:        #080b12;
+  --bg-gradient:    radial-gradient(ellipse at 50% 10%, rgba(99, 102, 241, 0.15) 0%, rgba(8, 11, 18, 0) 70%),
+                    radial-gradient(ellipse at 80% 80%, rgba(56, 189, 248, 0.1) 0%, rgba(8, 11, 18, 0) 60%),
+                    #080b12;
+  --text:           #f1f5f9;
+  --text-2:         #94a3b8;
+  --text-dim:       #64748b;
+  --border:         rgba(255, 255, 255, 0.1);
+  --border-highlight: rgba(99, 102, 241, 0.4);
+  --glass-bg:       rgba(15, 23, 42, 0.65);
+  --glass-card:     rgba(15, 23, 42, 0.55);
+  --glass-card-hover: rgba(30, 41, 59, 0.75);
+  --input-bg:       rgba(15, 23, 42, 0.75);
+  --input-area-fade: rgba(8, 11, 18, 0.85);
+  --hover:          rgba(255, 255, 255, 0.08);
+  --accent:         #6366f1;
+  --accent-glow:    rgba(99, 102, 241, 0.5);
+  --cyan-glow:      rgba(56, 189, 248, 0.5);
+  --code-bg:        rgba(10, 14, 23, 0.85);
+  --user-bg:        rgba(30, 41, 59, 0.6);
+  --ai-msg-bg:      rgba(15, 23, 42, 0.4);
+  --brand:          #818cf8;
 }
-body.dark {
-  --bg:        #212121;
-  --bg-alt:    #1a1a1a;
-  --text:      #ececec;
-  --text-2:    #9ca3af;
-  --border:    #333333;
-  --input-bg:  #2f2f2f;
-  --hover:     #2a2a2a;
-  --accent:    #ffffff;
-  --code-bg:   #0d0d0d;
-  --user-bg:   #303030;
-  --brand:     #818cf8;
+
+body.light {
+  --bg-base:        #f8fafc;
+  --bg-gradient:    radial-gradient(ellipse at 50% 10%, rgba(99, 102, 241, 0.08) 0%, rgba(248, 250, 252, 0) 70%),
+                    radial-gradient(ellipse at 80% 80%, rgba(56, 189, 248, 0.06) 0%, rgba(248, 250, 252, 0) 60%),
+                    #f8fafc;
+  --text:           #0f172a;
+  --text-2:         #475569;
+  --text-dim:       #94a3b8;
+  --border:         rgba(0, 0, 0, 0.08);
+  --border-highlight: rgba(99, 102, 241, 0.35);
+  --glass-bg:       rgba(255, 255, 255, 0.75);
+  --glass-card:     rgba(255, 255, 255, 0.7);
+  --glass-card-hover: rgba(255, 255, 255, 0.95);
+  --input-bg:       rgba(255, 255, 255, 0.85);
+  --input-area-fade: rgba(248, 250, 252, 0.9);
+  --hover:          rgba(0, 0, 0, 0.05);
+  --accent:         #4f46e5;
+  --accent-glow:    rgba(79, 70, 229, 0.3);
+  --cyan-glow:      rgba(14, 165, 233, 0.3);
+  --code-bg:        #1e293b;
+  --user-bg:        rgba(241, 245, 249, 0.8);
+  --ai-msg-bg:      rgba(255, 255, 255, 0.5);
+  --brand:          #4f46e5;
 }
 
 /* ── Base ── */
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  background: var(--bg);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, -apple-system, Helvetica, Arial, sans-serif;
+  background: var(--bg-base);
+  background-image: var(--bg-gradient);
   color: var(--text);
   height: 100dvh;
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+/* ── AI Neural Canvas Background ── */
+#ai-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Background Cyber Grid Overlay ── */
+.cyber-grid {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-size: 50px 50px;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  pointer-events: none;
+  z-index: 1;
+}
+body.light .cyber-grid {
+  background-image: 
+    linear-gradient(to right, rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
 }
 
 /* ── Top bar ── */
 .topbar {
-  height: 52px;
+  height: 56px;
   border-bottom: 1px solid var(--border);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 16px;
+  padding: 0 20px;
   flex-shrink: 0;
-  background: var(--bg);
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  position: relative;
+  z-index: 10;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 .topbar-left {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 14px;
 }
 .logo {
   font-size: 16px;
@@ -69,216 +131,377 @@ body {
   color: var(--text);
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
+  letter-spacing: -0.3px;
 }
 .logo-dot {
-  width: 26px;
-  height: 26px;
-  border-radius: 8px;
-  background: linear-gradient(135deg, #111827, #6366f1);
+  width: 30px;
+  height: 30px;
+  border-radius: 9px;
+  background: linear-gradient(135deg, #4f46e5, #06b6d4);
   display: flex;
   align-items: center;
   justify-content: center;
   color: #fff;
-  font-size: 13px;
-  font-weight: 700;
+  font-size: 14px;
+  font-weight: 800;
+  box-shadow: 0 0 15px rgba(99, 102, 241, 0.5);
+  position: relative;
 }
+.logo-dot::after {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: 11px;
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.8), rgba(6, 182, 212, 0.8));
+  z-index: -1;
+  opacity: 0.6;
+  filter: blur(4px);
+}
+
+/* Neural status pill */
+.ai-status-pill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  background: rgba(34, 197, 94, 0.1);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  color: #22c55e;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.ai-status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 8px #22c55e;
+  animation: pulse-beacon 2s infinite ease-in-out;
+}
+@keyframes pulse-beacon {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.3); opacity: 0.6; }
+}
+
 .model-select {
   border: 1px solid var(--border);
   background: var(--input-bg);
+  backdrop-filter: blur(8px);
   color: var(--text);
   font-size: 13px;
   font-weight: 500;
-  padding: 5px 10px;
-  border-radius: 6px;
+  padding: 6px 12px;
+  border-radius: 8px;
   outline: none;
   cursor: pointer;
+  transition: all 0.2s;
 }
+.model-select:hover { border-color: var(--border-highlight); }
+
 .topbar-right {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 6px;
 }
 .icon-btn {
-  width: 34px;
-  height: 34px;
-  border: none;
-  background: transparent;
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--border);
+  background: var(--glass-card);
   color: var(--text-2);
-  border-radius: 8px;
+  border-radius: 9px;
   cursor: pointer;
-  font-size: 16px;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.15s;
+  transition: all 0.2s;
 }
-.icon-btn:hover { background: var(--hover); color: var(--text); }
+.icon-btn:hover {
+  background: var(--hover);
+  color: var(--text);
+  border-color: var(--border-highlight);
+  transform: translateY(-1px);
+}
 
 /* ── Chat area ── */
 .chat-area {
   flex: 1;
   overflow-y: auto;
   scroll-behavior: smooth;
+  position: relative;
+  z-index: 2;
 }
 .chat-inner {
-  max-width: 720px;
+  max-width: 760px;
   margin: 0 auto;
-  padding: 24px 20px 160px;
+  padding: 30px 20px 170px;
 }
 
-/* ── Welcome ── */
+/* ── Welcome Screen ── */
 .welcome {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 55vh;
+  min-height: 52vh;
   text-align: center;
 }
+.welcome-beacon-wrap {
+  position: relative;
+  margin-bottom: 20px;
+}
 .welcome-icon {
-  width: 52px;
-  height: 52px;
-  border-radius: 16px;
-  background: linear-gradient(135deg, #111827, #6366f1);
+  width: 64px;
+  height: 64px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #4f46e5 0%, #06b6d4 100%);
   display: flex;
   align-items: center;
   justify-content: center;
   color: #fff;
-  font-size: 22px;
-  font-weight: 700;
-  margin-bottom: 16px;
+  font-size: 28px;
+  font-weight: 800;
+  box-shadow: 0 0 35px rgba(99, 102, 241, 0.45);
+  position: relative;
+  z-index: 2;
 }
+.beacon-ring {
+  position: absolute;
+  inset: -12px;
+  border-radius: 30px;
+  border: 1px dashed rgba(99, 102, 241, 0.4);
+  animation: spin-slow 24s linear infinite;
+}
+@keyframes spin-slow {
+  to { transform: rotate(360deg); }
+}
+
 .welcome h1 {
-  font-size: 26px;
-  font-weight: 600;
-  margin-bottom: 6px;
+  font-size: 30px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  background: linear-gradient(135deg, var(--text) 30%, var(--brand) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: -0.5px;
 }
 .welcome p {
   color: var(--text-2);
   font-size: 15px;
-  max-width: 440px;
+  max-width: 480px;
+  line-height: 1.6;
 }
+
+/* ── Suggestion Cards ── */
 .suggestions {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 8px;
-  margin-top: 28px;
-  max-width: 520px;
+  gap: 12px;
+  margin-top: 32px;
+  max-width: 620px;
   width: 100%;
 }
 .suggestion {
   border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 14px;
+  border-radius: 14px;
+  padding: 16px 18px;
   cursor: pointer;
   text-align: left;
-  background: var(--bg);
-  transition: background 0.15s, border-color 0.15s;
-  font-size: 13px;
+  background: var(--glass-card);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  position: relative;
+  overflow: hidden;
+}
+.suggestion::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), transparent);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.suggestion:hover {
+  background: var(--glass-card-hover);
+  border-color: var(--border-highlight);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(99, 102, 241, 0.15);
+}
+.suggestion:hover::before { opacity: 1; }
+.suggestion strong {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 14px;
+  color: var(--text);
+  font-weight: 600;
+}
+.suggestion small {
+  color: var(--text-2);
+  font-size: 12px;
+  display: block;
   line-height: 1.4;
 }
-.suggestion:hover { background: var(--hover); border-color: var(--brand); }
-.suggestion strong { display: block; margin-bottom: 2px; font-size: 14px; }
-.suggestion small { color: var(--text-2); }
 
 /* ── Message bubbles ── */
 .msg {
   display: flex;
-  gap: 12px;
-  margin-bottom: 24px;
+  gap: 14px;
+  margin-bottom: 28px;
+  animation: fadeInMsg 0.3s ease-out;
 }
+@keyframes fadeInMsg {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 .msg-avatar {
-  width: 30px;
-  height: 30px;
-  border-radius: 8px;
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
   flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 700;
   color: #fff;
 }
-.msg-avatar.user { background: var(--brand); }
-.msg-avatar.ai   { background: linear-gradient(135deg, #111827, #6366f1); }
-.msg-body { flex: 1; min-width: 0; }
+.msg-avatar.user {
+  background: linear-gradient(135deg, #06b6d4, #3b82f6);
+  box-shadow: 0 0 12px rgba(6, 182, 212, 0.4);
+}
+.msg-avatar.ai {
+  background: linear-gradient(135deg, #4f46e5, #9333ea);
+  box-shadow: 0 0 15px rgba(99, 102, 241, 0.5);
+  position: relative;
+}
+.msg-avatar.ai::after {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.6), rgba(147, 51, 234, 0.6));
+  z-index: -1;
+  filter: blur(4px);
+}
+
+.msg-body {
+  flex: 1;
+  min-width: 0;
+}
 .msg-role {
   font-size: 13px;
   font-weight: 600;
-  margin-bottom: 4px;
+  margin-bottom: 6px;
+  color: var(--text-2);
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 .msg-content {
   font-size: 15px;
   line-height: 1.7;
   overflow-wrap: anywhere;
+  background: var(--ai-msg-bg);
+  padding: 16px 20px;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
 }
-.msg-content p { margin-bottom: 10px; }
-.msg-content ul, .msg-content ol { padding-left: 22px; margin-bottom: 10px; }
-.msg-content h1, .msg-content h2, .msg-content h3 { margin: 16px 0 8px; }
-.msg-content strong { font-weight: 600; }
+.msg.user-bubble .msg-content {
+  background: var(--user-bg);
+  border-color: rgba(99, 102, 241, 0.2);
+}
+
+.msg-content p { margin-bottom: 12px; }
+.msg-content p:last-child { margin-bottom: 0; }
+.msg-content ul, .msg-content ol { padding-left: 24px; margin-bottom: 12px; }
+.msg-content li { margin-bottom: 4px; }
+.msg-content h2 { margin: 18px 0 10px; font-size: 18px; color: var(--text); border-bottom: 1px solid var(--border); padding-bottom: 6px; }
+.msg-content h3 { margin: 16px 0 8px; font-size: 16px; color: var(--brand); }
+.msg-content h4 { margin: 12px 0 6px; font-size: 14px; }
+.msg-content strong { font-weight: 600; color: var(--text); }
 .msg-content a { color: var(--brand); text-decoration: none; }
 .msg-content a:hover { text-decoration: underline; }
 
 /* ── Code blocks ── */
 .code-block {
   background: var(--code-bg);
-  border-radius: 8px;
-  margin: 12px 0;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  margin: 14px 0;
   overflow: hidden;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.3);
 }
 .code-block-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 6px 12px;
-  background: rgba(255,255,255,0.06);
+  padding: 7px 14px;
+  background: rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   font-size: 12px;
-  color: #aaa;
+  color: #94a3b8;
+  font-family: monospace;
 }
 .copy-btn {
-  border: none;
-  background: transparent;
-  color: #ccc;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.08);
+  color: #cbd5e1;
   cursor: pointer;
-  font-size: 12px;
-  padding: 2px 8px;
-  border-radius: 4px;
+  font-size: 11px;
+  padding: 3px 10px;
+  border-radius: 5px;
+  transition: all 0.2s;
 }
-.copy-btn:hover { background: rgba(255,255,255,0.1); }
+.copy-btn:hover {
+  background: rgba(255, 255, 255, 0.18);
+  color: #fff;
+}
 .code-block pre {
-  padding: 14px;
+  padding: 16px;
   overflow-x: auto;
   margin: 0;
 }
 .code-block code {
-  font-family: "SF Mono", Consolas, Monaco, "Courier New", monospace;
+  font-family: "SF Mono", Menlo, Consolas, Monaco, "Courier New", monospace;
   font-size: 13px;
-  color: #e5e7eb;
-  line-height: 1.5;
+  color: #e2e8f0;
+  line-height: 1.6;
 }
 
 /* inline code */
 .msg-content code:not(.code-block code) {
-  background: var(--hover);
+  background: rgba(99, 102, 241, 0.15);
   color: var(--brand);
-  padding: 2px 5px;
-  border-radius: 4px;
+  padding: 2px 6px;
+  border-radius: 5px;
   font-size: 13px;
-  font-family: "SF Mono", Consolas, Monaco, monospace;
+  font-family: "SF Mono", Menlo, Consolas, monospace;
+  border: 1px solid rgba(99, 102, 241, 0.25);
 }
 
 /* ── Typing indicator ── */
-.typing-dots { display: flex; gap: 4px; padding: 4px 0; }
+.typing-dots { display: flex; gap: 5px; padding: 6px 0; align-items: center; }
 .typing-dots span {
-  width: 6px; height: 6px;
-  background: var(--text-2);
+  width: 7px;
+  height: 7px;
+  background: var(--brand);
   border-radius: 50%;
   animation: blink 1.2s infinite;
+  box-shadow: 0 0 8px var(--accent-glow);
 }
 .typing-dots span:nth-child(2) { animation-delay: 0.2s; }
 .typing-dots span:nth-child(3) { animation-delay: 0.4s; }
-@keyframes blink { 0%,80%,100%{opacity:.3} 40%{opacity:1} }
+@keyframes blink { 0%, 80%, 100% { opacity: .2; transform: scale(0.8); } 40% { opacity: 1; transform: scale(1.2); } }
 
 /* ── Input area ── */
 .input-area {
@@ -286,23 +509,31 @@ body {
   bottom: 0;
   left: 0;
   right: 0;
-  padding: 16px 20px;
-  background: linear-gradient(transparent, var(--bg) 25%);
+  padding: 20px;
+  background: linear-gradient(to top, var(--input-area-fade) 60%, transparent);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  z-index: 20;
 }
 .input-wrapper {
-  max-width: 720px;
+  max-width: 760px;
   margin: 0 auto;
   background: var(--input-bg);
   border: 1px solid var(--border);
-  border-radius: 16px;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  border-radius: 18px;
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.2);
   display: flex;
   align-items: flex-end;
-  padding: 8px 8px 8px 16px;
-  gap: 6px;
-  transition: border-color 0.2s;
+  padding: 10px 12px 10px 18px;
+  gap: 8px;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  transition: all 0.25s;
 }
-.input-wrapper:focus-within { border-color: var(--brand); }
+.input-wrapper:focus-within {
+  border-color: var(--brand);
+  box-shadow: 0 10px 35px rgba(99, 102, 241, 0.25), 0 0 0 1px var(--brand);
+}
 .input-wrapper textarea {
   flex: 1;
   resize: none;
@@ -316,40 +547,56 @@ body {
   padding: 6px 0;
   font-family: inherit;
 }
-.input-wrapper textarea::placeholder { color: var(--text-2); }
+.input-wrapper textarea::placeholder { color: var(--text-dim); }
 .send-btn {
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
   border: none;
-  background: var(--accent);
-  color: var(--bg);
+  background: linear-gradient(135deg, #4f46e5, #06b6d4);
+  color: #fff;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  transition: opacity 0.15s;
+  transition: all 0.2s;
+  box-shadow: 0 0 15px rgba(99, 102, 241, 0.4);
 }
-.send-btn:hover { opacity: 0.85; }
-.send-btn:disabled { opacity: 0.4; cursor: default; }
+.send-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(99, 102, 241, 0.6);
+}
+.send-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
 .send-btn svg { width: 18px; height: 18px; }
 .disclaimer {
   text-align: center;
   font-size: 11px;
-  color: var(--text-2);
-  margin-top: 6px;
+  color: var(--text-dim);
+  margin-top: 8px;
+  letter-spacing: 0.2px;
 }
 
 /* ── Responsive ── */
-@media (max-width: 600px) {
+@media (max-width: 640px) {
   .suggestions { grid-template-columns: 1fr; }
-  .welcome h1 { font-size: 22px; }
-  .chat-inner { padding-left: 12px; padding-right: 12px; }
+  .welcome h1 { font-size: 24px; }
+  .chat-inner { padding-left: 14px; padding-right: 14px; }
+  .topbar { padding: 0 14px; }
+  .ai-status-pill span:not(.ai-status-dot) { display: none; }
 }
 </style>
 </head>
 <body>
+
+<!-- Background Interactive Cyber Canvas -->
+<canvas id="ai-canvas"></canvas>
+<div class="cyber-grid"></div>
 
 <!-- Top bar -->
 <header class="topbar">
@@ -358,8 +605,12 @@ body {
       <div class="logo-dot">R</div>
       Rader AI
     </div>
+    <div class="ai-status-pill" title="Neural Matrix Online">
+      <div class="ai-status-dot"></div>
+      <span>Neural Engine Active</span>
+    </div>
     <select class="model-select" id="modelSelect">
-      <option value="rader-default">Rader AI</option>
+      <option value="rader-neural">Rader AI (Neural v3)</option>
       <option value="rader-reasoning">Rader AI (Reasoning)</option>
     </select>
   </div>
@@ -378,25 +629,28 @@ body {
   <div class="chat-inner" id="chatInner">
 
     <section class="welcome" id="welcome">
-      <div class="welcome-icon">R</div>
-      <h1>What can I help with?</h1>
-      <p>Ask anything — coding, learning, research, writing, problem solving.</p>
+      <div class="welcome-beacon-wrap">
+        <div class="welcome-icon">R</div>
+        <div class="beacon-ring"></div>
+      </div>
+      <h1>Autonomous Neural Intelligence</h1>
+      <p>Ask anything — every topic includes both foundational concept and runnable practical code.</p>
       <div class="suggestions">
         <div class="suggestion" onclick="ask('Explain artificial intelligence in simple terms')">
-          <strong>🧠 Learn AI</strong>
-          <small>Fundamentals & machine learning</small>
+          <strong>🧠 Learn Artificial Intelligence</strong>
+          <small>Theory, neural architectures & ML paradigms</small>
         </div>
         <div class="suggestion" onclick="ask('Write a Python web scraper for me')">
-          <strong>💻 Write code</strong>
-          <small>Python, JavaScript, and more</small>
+          <strong>💻 Production Python Code</strong>
+          <small>APIs, async pipelines & clean design</small>
         </div>
         <div class="suggestion" onclick="ask('Help me prepare for a technical interview')">
-          <strong>🎯 Interview prep</strong>
-          <small>Algorithms & system design</small>
+          <strong>🎯 Technical Interview Prep</strong>
+          <small>Optimal Two Sum, system design & STAR answers</small>
         </div>
         <div class="suggestion" onclick="ask('Give me ideas for an AI startup')">
-          <strong>🚀 Brainstorm</strong>
-          <small>Creative ideas & strategy</small>
+          <strong>🚀 AI Startup Blueprints</strong>
+          <small>Moats, market metrics & venture score algorithm</small>
         </div>
       </div>
     </section>
@@ -404,20 +658,303 @@ body {
   </div>
 </div>
 
-<!-- Input -->
+<!-- Input Area -->
 <div class="input-area">
   <div class="input-wrapper">
-    <textarea id="input" rows="1" placeholder="Message Rader AI…"
+    <textarea id="input" rows="1" placeholder="Ask Rader AI anything (concepts + practical code)…"
       onkeydown="handleKey(event)" oninput="autoGrow(this)"></textarea>
     <button class="send-btn" id="sendBtn" onclick="send()" title="Send">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
     </button>
   </div>
-  <div class="disclaimer">Rader AI can make mistakes. Verify important information.</div>
+  <div class="disclaimer">Rader AI Engine Active · Complete Conceptual & Practical Intelligence</div>
 </div>
 
 <script>
-/* ── State ── */
+/*
+=============================================================================
+1. LIVE AI NEURAL MATRIX BACKGROUND SCENARIO
+Simulates active neural compute, synaptic signaling pulses, and data telemetry
+=============================================================================
+*/
+(function initNeuralCanvas() {
+  const canvas = document.getElementById("ai-canvas");
+  if (!canvas) return;
+  const ctx = canvas.getContext("2d");
+
+  let width = (canvas.width = window.innerWidth);
+  let height = (canvas.height = window.innerHeight);
+
+  window.addEventListener("resize", () => {
+    width = canvas.width = window.innerWidth;
+    height = canvas.height = window.innerHeight;
+    initNodes();
+  });
+
+  // Mouse interaction
+  const mouse = { x: null, y: null, radius: 170 };
+  window.addEventListener("mousemove", (e) => {
+    mouse.x = e.clientX;
+    mouse.y = e.clientY;
+  });
+  window.addEventListener("mouseleave", () => {
+    mouse.x = null;
+    mouse.y = null;
+  });
+
+  // Global indicator when AI is generating response
+  window.aiComputing = false;
+
+  // Neural network nodes
+  const nodeCount = Math.min(55, Math.floor((width * height) / 18000));
+  let nodes = [];
+  let pulses = [];
+  let floatingTokens = [];
+
+  const aiTokensList = [
+    "tensor[32, 768]", "softmax(Q·Kᵀ/√d)", "loss: 0.0014", "synapse.fire()",
+    "attention_head[12]", "∇W = η·δ·x", "ReLU()", "AdamW(1e-4)", "token.embed",
+    "backprop.step()", "vector_dim: 1536", "accuracy: 99.4%"
+  ];
+
+  class Node {
+    constructor() {
+      this.x = Math.random() * width;
+      this.y = Math.random() * height;
+      this.vx = (Math.random() - 0.5) * 0.7;
+      this.vy = (Math.random() - 0.5) * 0.7;
+      this.radius = Math.random() * 2.5 + 1.5;
+      this.baseAlpha = Math.random() * 0.5 + 0.3;
+      this.ringRadius = 0;
+      this.ringAlpha = 0;
+    }
+
+    update() {
+      const speedMultiplier = window.aiComputing ? 2.0 : 1.0;
+      this.x += this.vx * speedMultiplier;
+      this.y += this.vy * speedMultiplier;
+
+      if (this.x < 0 || this.x > width) this.vx *= -1;
+      if (this.y < 0 || this.y > height) this.vy *= -1;
+
+      // Mouse attraction
+      if (mouse.x !== null && mouse.y !== null) {
+        const dx = mouse.x - this.x;
+        const dy = mouse.y - this.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < mouse.radius) {
+          const force = (mouse.radius - dist) / mouse.radius;
+          this.x += (dx / dist) * force * 1.5;
+          this.y += (dy / dist) * force * 1.5;
+        }
+      }
+
+      // Ripple ring animation
+      if (this.ringAlpha > 0) {
+        this.ringRadius += 0.8;
+        this.ringAlpha -= 0.02;
+      }
+    }
+
+    triggerActivation() {
+      this.ringRadius = this.radius;
+      this.ringAlpha = 0.8;
+    }
+
+    draw(isDark) {
+      // Glow circle
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+      ctx.fillStyle = isDark
+        ? `rgba(99, 102, 241, ${this.baseAlpha})`
+        : `rgba(79, 70, 229, ${this.baseAlpha * 0.8})`;
+      ctx.fill();
+
+      // Ripple ring on pulse arrival
+      if (this.ringAlpha > 0) {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.ringRadius, 0, Math.PI * 2);
+        ctx.strokeStyle = `rgba(56, 189, 248, ${this.ringAlpha})`;
+        ctx.lineWidth = 1;
+        ctx.stroke();
+      }
+    }
+  }
+
+  // Synaptic Data Packet Pulses
+  class Pulse {
+    constructor(startNode, endNode) {
+      this.start = startNode;
+      this.end = endNode;
+      this.progress = 0;
+      this.speed = (Math.random() * 0.015 + 0.01) * (window.aiComputing ? 2.5 : 1.0);
+      this.color = Math.random() > 0.5 ? "#38bdf8" : "#818cf8";
+    }
+
+    update() {
+      this.progress += this.speed;
+      if (this.progress >= 1) {
+        this.end.triggerActivation();
+        return false; // finished
+      }
+      return true;
+    }
+
+    draw() {
+      const curX = this.start.x + (this.end.x - this.start.x) * this.progress;
+      const curY = this.start.y + (this.end.y - this.start.y) * this.progress;
+
+      ctx.beginPath();
+      ctx.arc(curX, curY, 2.5, 0, Math.PI * 2);
+      ctx.fillStyle = this.color;
+      ctx.shadowColor = this.color;
+      ctx.shadowBlur = 8;
+      ctx.fill();
+      ctx.shadowBlur = 0;
+    }
+  }
+
+  // Floating AI Hologram Tokens
+  class FloatingToken {
+    constructor() {
+      this.reset();
+      this.y = Math.random() * height;
+    }
+
+    reset() {
+      this.x = Math.random() * (width - 150) + 75;
+      this.y = height + 30;
+      this.vy = -(Math.random() * 0.4 + 0.2);
+      this.text = aiTokensList[Math.floor(Math.random() * aiTokensList.length)];
+      this.alpha = 0;
+      this.targetAlpha = Math.random() * 0.25 + 0.12;
+      this.life = 0;
+      this.maxLife = Math.random() * 400 + 300;
+    }
+
+    update() {
+      this.y += this.vy;
+      this.life++;
+
+      if (this.life < 60) {
+        this.alpha = (this.life / 60) * this.targetAlpha;
+      } else if (this.life > this.maxLife - 60) {
+        this.alpha = ((this.maxLife - this.life) / 60) * this.targetAlpha;
+      }
+
+      if (this.life >= this.maxLife || this.y < -30) {
+        this.reset();
+      }
+    }
+
+    draw(isDark) {
+      if (this.alpha <= 0) return;
+      ctx.font = "11px 'SF Mono', Consolas, Monaco, monospace";
+      ctx.fillStyle = isDark
+        ? `rgba(147, 197, 253, ${this.alpha})`
+        : `rgba(79, 70, 229, ${this.alpha * 0.9})`;
+      ctx.fillText(this.text, this.x, this.y);
+    }
+  }
+
+  function initNodes() {
+    nodes = [];
+    pulses = [];
+    floatingTokens = [];
+    const count = Math.min(55, Math.floor((width * height) / 18000));
+    for (let i = 0; i < count; i++) {
+      nodes.push(new Node());
+    }
+    for (let i = 0; i < 7; i++) {
+      floatingTokens.push(new FloatingToken());
+    }
+  }
+
+  initNodes();
+
+  // Animation Loop
+  function animate() {
+    ctx.clearRect(0, 0, width, height);
+    const isDark = !document.body.classList.contains("light");
+
+    // 1. Draw Floating AI Telemetry Tokens
+    for (let token of floatingTokens) {
+      token.update();
+      token.draw(isDark);
+    }
+
+    // 2. Connect Nodes with Synapses
+    const maxDist = 135;
+    for (let i = 0; i < nodes.length; i++) {
+      for (let j = i + 1; j < nodes.length; j++) {
+        const dx = nodes[i].x - nodes[j].x;
+        const dy = nodes[i].y - nodes[j].y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+
+        if (dist < maxDist) {
+          const alpha = (1 - dist / maxDist) * (isDark ? 0.22 : 0.12);
+          ctx.beginPath();
+          ctx.moveTo(nodes[i].x, nodes[i].y);
+          ctx.lineTo(nodes[j].x, nodes[j].y);
+          ctx.strokeStyle = isDark
+            ? `rgba(99, 102, 241, ${alpha})`
+            : `rgba(79, 70, 229, ${alpha})`;
+          ctx.lineWidth = 1;
+          ctx.stroke();
+
+          // Spontaneously fire data packet pulse along active synapse
+          const pulseChance = window.aiComputing ? 0.003 : 0.0006;
+          if (Math.random() < pulseChance && pulses.length < 25) {
+            pulses.push(new Pulse(nodes[i], nodes[j]));
+          }
+        }
+      }
+
+      // Connection to mouse cursor
+      if (mouse.x !== null && mouse.y !== null) {
+        const dx = mouse.x - nodes[i].x;
+        const dy = mouse.y - nodes[i].y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < mouse.radius) {
+          const alpha = (1 - dist / mouse.radius) * 0.45;
+          ctx.beginPath();
+          ctx.moveTo(nodes[i].x, nodes[i].y);
+          ctx.lineTo(mouse.x, mouse.y);
+          ctx.strokeStyle = isDark
+            ? `rgba(56, 189, 248, ${alpha})`
+            : `rgba(14, 165, 233, ${alpha})`;
+          ctx.lineWidth = 1.2;
+          ctx.stroke();
+        }
+      }
+    }
+
+    // 3. Update & Draw Pulses
+    for (let i = pulses.length - 1; i >= 0; i--) {
+      if (pulses[i].update()) {
+        pulses[i].draw();
+      } else {
+        pulses.splice(i, 1);
+      }
+    }
+
+    // 4. Update & Draw Nodes
+    for (let node of nodes) {
+      node.update();
+      node.draw(isDark);
+    }
+
+    requestAnimationFrame(animate);
+  }
+
+  animate();
+})();
+
+/*
+=============================================================================
+2. APPLICATION STATE & CHAT LOGIC
+=============================================================================
+*/
 const API = "/api/chat";
 let history = [];
 let generating = false;
@@ -432,21 +969,32 @@ const sendBtn    = $("sendBtn");
 
 /* ── Theme ── */
 function toggleTheme() {
-  document.body.classList.toggle("dark");
-  localStorage.setItem("raderTheme", document.body.classList.contains("dark") ? "dark" : "light");
+  document.body.classList.toggle("light");
+  const isLight = document.body.classList.contains("light");
+  localStorage.setItem("raderTheme", isLight ? "light" : "dark");
 }
-if (localStorage.getItem("raderTheme") === "dark") document.body.classList.add("dark");
+if (localStorage.getItem("raderTheme") === "light") {
+  document.body.classList.add("light");
+}
 
 /* ── Helpers ── */
-function scrollBottom() { chatArea.scrollTop = chatArea.scrollHeight; }
+function scrollBottom() {
+  chatArea.scrollTop = chatArea.scrollHeight;
+}
 function autoGrow(el) {
   el.style.height = "auto";
   el.style.height = Math.min(el.scrollHeight, 160) + "px";
 }
 function handleKey(e) {
-  if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); send(); }
+  if (e.key === "Enter" && !e.shiftKey) {
+    e.preventDefault();
+    send();
+  }
 }
-function ask(text) { inputEl.value = text; send(); }
+function ask(text) {
+  inputEl.value = text;
+  send();
+}
 function newChat() {
   history = [];
   chatInner.innerHTML = "";
@@ -456,31 +1004,29 @@ function newChat() {
   inputEl.style.height = "auto";
 }
 
-/* ── Render markdown (lightweight) ── */
+/* ── Render Markdown ── */
 function renderMd(text) {
-  // code blocks
+  // Code blocks
   text = text.replace(/```(\w*)\n([\s\S]*?)```/g, (_, lang, code) => {
-    const escaped = code.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
-    return `<div class="code-block"><div class="code-block-header"><span>${lang||"code"}</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div><pre><code>${escaped}</code></pre></div>`;
+    const escaped = code.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    return `<div class="code-block"><div class="code-block-header"><span>${lang || "code"}</span><button class="copy-btn" onclick="copyCode(this)">Copy Code</button></div><pre><code>${escaped}</code></pre></div>`;
   });
-  // inline code
+  // Inline code
   text = text.replace(/`([^`]+)`/g, '<code>$1</code>');
-  // bold
+  // Bold & Italic
   text = text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
-  // italic
   text = text.replace(/\*(.+?)\*/g, '<em>$1</em>');
-  // headers
+  // Headers
   text = text.replace(/^#### (.+)$/gm, '<h4>$1</h4>');
   text = text.replace(/^### (.+)$/gm, '<h3>$1</h3>');
   text = text.replace(/^## (.+)$/gm, '<h2>$1</h2>');
-  // horizontal rule
+  // Divider
   text = text.replace(/^---$/gm, '<hr style="border:none;border-top:1px solid var(--border);margin:16px 0;">');
-  // unordered list
+  // Lists
   text = text.replace(/^- (.+)$/gm, '<li>$1</li>');
   text = text.replace(/(<li>.*<\/li>\n?)+/g, m => '<ul>' + m + '</ul>');
-  // ordered list
   text = text.replace(/^\d+\. (.+)$/gm, '<li>$1</li>');
-  // paragraphs
+  // Paragraphs
   text = text.replace(/\n{2,}/g, '</p><p>');
   text = text.replace(/\n/g, '<br>');
   return '<p>' + text + '</p>';
@@ -490,7 +1036,7 @@ function copyCode(btn) {
   const code = btn.closest('.code-block').querySelector('code').textContent;
   navigator.clipboard.writeText(code);
   btn.textContent = 'Copied!';
-  setTimeout(() => btn.textContent = 'Copy', 1500);
+  setTimeout(() => btn.textContent = 'Copy Code', 1500);
 }
 
 /* ── Append message ── */
@@ -498,13 +1044,13 @@ function addMsg(role, content) {
   if (welcomeEl.style.display !== "none") welcomeEl.style.display = "none";
 
   const div = document.createElement("div");
-  div.className = "msg";
-
   const isUser = role === "user";
+  div.className = `msg ${isUser ? 'user-bubble' : 'ai-bubble'}`;
+
   div.innerHTML = `
     <div class="msg-avatar ${isUser ? 'user' : 'ai'}">${isUser ? 'U' : 'R'}</div>
     <div class="msg-body">
-      <div class="msg-role">${isUser ? 'You' : 'Rader AI'}</div>
+      <div class="msg-role">${isUser ? 'You' : 'Rader AI · Neural Core'}</div>
       <div class="msg-content">${isUser ? escHtml(content) : renderMd(content)}</div>
     </div>`;
   chatInner.appendChild(div);
@@ -513,18 +1059,18 @@ function addMsg(role, content) {
 }
 
 function escHtml(s) {
-  return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/\n/g,"<br>");
+  return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/\n/g, "<br>");
 }
 
 /* ── Typing indicator ── */
 function showTyping() {
   const div = document.createElement("div");
-  div.className = "msg";
+  div.className = "msg ai-bubble";
   div.id = "typing";
   div.innerHTML = `
     <div class="msg-avatar ai">R</div>
     <div class="msg-body">
-      <div class="msg-role">Rader AI</div>
+      <div class="msg-role">Rader AI · Computing Synaptic Pathways...</div>
       <div class="typing-dots"><span></span><span></span><span></span></div>
     </div>`;
   chatInner.appendChild(div);
@@ -541,6 +1087,7 @@ async function send() {
   if (!text || generating) return;
 
   generating = true;
+  window.aiComputing = true; // Accelerate background neural pulses
   sendBtn.disabled = true;
   inputEl.value = "";
   inputEl.style.height = "auto";
@@ -556,27 +1103,33 @@ async function send() {
       body: JSON.stringify({ messages: history })
     });
 
-    if (!res.ok) throw new Error("Server error " + res.status);
+    if (!res.ok) throw new Error("Server status: " + res.status);
     const data = await res.json();
-    const reply = data.answer || data.reply || "Sorry, I couldn't generate a response.";
+    const reply = data.answer || data.reply || "Unable to synthesize response.";
 
     hideTyping();
     addMsg("assistant", reply);
     history.push({ role: "assistant", content: reply });
   } catch (err) {
     hideTyping();
-    // Fallback local response
+    // Intelligent local offline / GitHub Pages fallback
     const fallback = localReply(text);
     addMsg("assistant", fallback);
     history.push({ role: "assistant", content: fallback });
   }
 
   generating = false;
+  window.aiComputing = false; // Restore normal neural pulse speed
   sendBtn.disabled = false;
   inputEl.focus();
 }
 
-/* ── Intelligent local engine (for GitHub Pages & offline) ── */
+/*
+=============================================================================
+3. ZERO-API-KEY LOCAL & GITHUB PAGES INTELLIGENCE ENGINE
+Provides both full conceptual understanding and practical code implementation
+=============================================================================
+*/
 function localReply(prompt) {
   const raw = (prompt || "").trim();
   const q = raw.toLowerCase();
@@ -841,9 +1394,9 @@ print("Two Sum Result:", two_sum([2, 7, 11, 15], 9))  # [0, 1]
 \`\`\``;
   }
 
-  // Fallback for any other topic
+  // Dynamic fallback for any other topic
   const clean = raw.replace(/^(what is|what are|explain|how to|tell me about|describe|write code for|can you explain)\s+/i, "").replace(/[?!.]+$/, "").trim();
-  const title = clean ? clean.charAt(0).toUpperCase() + clean.slice(1) : "Topic";
+  const title = clean ? clean.charAt(0).toUpperCase() + clean.slice(1) : "Concept";
   const safeClass = title.replace(/[^a-zA-Z0-9]/g, "") || "ServiceModule";
 
   return `## ${title}: Concepts & Practical Implementation
@@ -885,7 +1438,7 @@ print("Execution Report:", report)
 \`\`\``;
 }
 
-/* ── Init ── */
+/* ── Init Focus ── */
 inputEl.focus();
 </script>
 </body>
